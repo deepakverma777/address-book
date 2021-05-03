@@ -1,0 +1,144 @@
+openapi: 3.0.0
+
+info:
+  description: API specification for the Address Book Service
+  version: 1.0.0
+  title: Address Book Service
+  
+paths:
+  /compare:
+    post:
+      summary: Diffrence in days in ages of two persons
+      description: How many days older is name1 than name2
+      operationId: compare
+      requestBody:
+        description: How many days older is name1 than name2
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ComparisionRequest"
+      responses:
+        "200":
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ComparisionResponse"
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorData"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorData"
+        "415":
+          description: "Mediatype Not Supported"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorData"                
+
+        "500":
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorData"                                  
+              
+  /oldest: 
+    get:
+      summary: Returns oldest person
+      description: Returns name of the oldest person
+      operationId: oldest    
+      responses:
+        "200":
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OldestPersonResponse"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorData"
+        "500":
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorData"   
+  /male/count: 
+    get:
+      summary: Returns count or males
+      description: Returns count or males
+      operationId: maleCount    
+      responses:
+        "200":
+          description: Successful Operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MaleCountResponse"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorData"
+        "500":
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorData"                 
+        
+components:
+  schemas:
+    ErrorData:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/Error"
+
+    Error:
+      properties:
+        statusCode:
+          type: string
+        code:
+          type: string
+        message:
+          type: string
+          
+    ComparisionRequest:
+      type: object
+      properties:
+        name1:
+          type: string
+        name2:
+          type: string   
+          
+    ComparisionResponse:
+      type: object
+      properties:
+        daysCount:
+          type: string 
+    OldestPersonResponse:
+      type: object
+      properties:
+        oldestPerson:
+          type: string
+    MaleCountResponse:
+      type: object
+      properties:
+        maleCount:
+          type: string           
