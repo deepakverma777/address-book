@@ -77,8 +77,8 @@ paths:
                 $ref: "#/components/schemas/ErrorData"   
   /male/count: 
     get:
-      summary: Returns count or males
-      description: Returns count or males
+      summary: Returns count of males
+      description: Returns count of males
       operationId: maleCount    
       responses:
         "200":
@@ -99,7 +99,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorData"                 
-        
+servers:
+  - url: http://{hostname}/address-book-service/v1.0
+    variables:
+      hostname:
+        default: localhost
+  - url: http://{hostname}:{port}/document-storage-service/v1.0
+    variables:
+      hostname:
+        default: localhost
+      port:
+        enum:
+          - '9080'
+        default: '9080'        
 components:
   schemas:
     ErrorData:
